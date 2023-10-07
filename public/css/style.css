@@ -1,0 +1,39 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    background: linear-gradient(45deg, #4eaa70, #52bc95);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+.toMain{
+    margin: 25px;
+    text-decoration: none;
+    color: rgb(195, 65, 65);
+    font-size: 20px;
+}
+.players{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: #fff;
+    font-size: 20px;
+}
+.items{
+    display: flex;
+    flex-wrap: wrap;
+    width: 400px;
+    height: 400px;
+}
+.item{
+    width: calc(400px / 3);
+    height: calc(400px / 3);
+    border: 5px solid #3a684b;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    font-family: Arial, Helvetica, sans-serif;
+}
