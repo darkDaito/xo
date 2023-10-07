@@ -47,7 +47,7 @@ joinLobby.addEventListener("click", function () {
 
 createLobby.addEventListener("click", () => {
   let code = lobbyCode.value;
-  fetch("http://localhost:3005/createLobby/" + code + "/" + token)
+  fetch("/createLobby/" + code + "/" + token)
     .then((res) => res.json())
     .then((json) => {
       console.log(json);

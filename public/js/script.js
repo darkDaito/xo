@@ -19,14 +19,14 @@ function createToken(){
 let token = createToken()
 
 
-fetch("http://localhost:3005/addUser/" + token)
+fetch("addUser/" + token)
 .then((res)=>(res.json()))
 .then((json)=>{
  console.log(json);
 })
 
 setInterval(()=>{
-  fetch("http://localhost:3005/signal/" + token)
+  fetch("signal/" + token)
     .then((res) => res.json())
     .then((json) => {
       console.log(json);
@@ -69,7 +69,7 @@ for(let i = 0; i < item.length; i++){
 
           console.log(list);
           fetch(
-            "http://localhost:3005/update/" +
+            "update/" +
               JSON.stringify(list) +
               "/" +
               gameID
@@ -87,7 +87,7 @@ for(let i = 0; i < item.length; i++){
 
 
 setInterval(()=>{
-    fetch("http://localhost:3005/new/" + gameID)
+    fetch("new/" + gameID)
     .then((res) => res.json())
     .then((json) => {
         console.log(json.data)

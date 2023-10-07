@@ -7,7 +7,9 @@ import ejs from "ejs";
 
 console.log(uuid());
 let app = express();
-mongoose.connect('mongodb://localhost:27017')
+mongoose.connect(
+  "mongodb+srv://user:user@cluster0.rhuotn9.mongodb.net/?retryWrites=true&w=majority"
+);
 
 app.use(express.static('public'))
 
