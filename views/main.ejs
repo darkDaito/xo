@@ -6,7 +6,121 @@
     <title>Document</title>
     <link rel="stylesheet" href="/css/second.css" />
   </head>
-  <body>
+  <body style="background: linear-gradient(<%= colors.range %>deg, <%= colors.firstColor%>, <%= colors.secondColor%>)">
+    <div class="admin__panel">
+      <div class="colorsType">
+        <div class="colors colors1">
+          <input type="color" class="first__color"/> 
+          <input type="color" class="second__color"/>
+        </div>
+        <div class="colors colors2">
+
+        </div>
+      </div>
+
+
+      <input type="range" min="0" max="360" class="range">
+      <p class="range__value"></p>
+      <button class="set__color">Set color</button>
+      <button class="add__color">+ Color</button>
+    </div>
+
+    <style>
+      .admin__panel {
+        background: white;
+        padding: 20px;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        display: none;
+}
+.first__color {
+}
+.second__color {
+}
+.colors2{
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  
+
+}
+    </style>
+
+    <% if (admin) { %>
+    <script>
+      let password = prompt("your password");
+      let body = document.querySelector("body");
+      let adminPanel = document.getElementsByClassName("admin__panel")[0];
+      let firstColor = document.getElementsByClassName("first__color")[0];
+      let rangeValue = document.getElementsByClassName("range__value")[0];
+      let range = document.getElementsByClassName("range")[0];
+      let secondColor = document.getElementsByClassName("second__color")[0];
+      let setColor = document.getElementsByClassName("set__color")[0];
+      let addColor = document.getElementsByClassName("add__color")[0];
+      let colors1 = document.getElementsByClassName("colors1")[0];
+      let colors2 = document.getElementsByClassName("colors2")[0];
+      let colorList = ["red","blue","green","yellow","orange","purple","black","white","pink","skyblue","brown","grey"]
+
+       function createButton(){
+          let choiceBtn = document.createElement("input")
+          choiceBtn.type = "radio"
+          choiceBtn.name = "choice"
+          return choiceBtn
+          
+        }
+
+
+      if (password == "123") {
+        
+        colors1.appendChild(createButton())
+        colors2.appendChild(createButton())
+        
+        let colors = [];
+        adminPanel.style.display = 'flex';
+        range.addEventListener("change", ()=>{
+          rangeValue.textContent = range.value;
+        })
+        addColor.addEventListener("click", ()=>{
+          adminPanel.innerHTML += '<input type="color" class="second__color"/>'
+        })
+        setColor.addEventListener("click", ()=>{
+          colors = [];
+          body.style.background = `linear-gradient(${range.value}deg ,${firstColor.value} , ${secondColor.value})`
+          colors.push(firstColor.value)
+          colors.push(secondColor.value)
+          console.log(firstColor.value)
+           fetch("/admin1/" + firstColor.value.slice(1) + '/' + secondColor.value.slice(1)+ "/" + range.value)
+              .then((res)=>(res.json()))
+              .then((json)=>{
+              console.log(json);
+          })
+
+
+        })
+       
+       function createColor(){
+        for(let i = 0; i < colorList.length; i++){
+          let divColor = document.createElement("div")
+          divColor.classList.add("color")
+          divColor.style.width = '20px'
+          divColor.style.height = '20px'
+          divColor.style.background = colorList[i]
+          colors2.appendChild(divColor)
+          divColor.addEventListener("click", function (){
+
+          })
+        } 
+      }
+      createColor()
+      
+      }
+    </script>
+    <% } %>
+
     <div class="wrapper">
       <div class="players">
         Підключено: <span class="players__counter">0</span>

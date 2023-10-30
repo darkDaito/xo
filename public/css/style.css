@@ -29,11 +29,22 @@ body{
 .item{
     width: calc(400px / 3);
     height: calc(400px / 3);
-    border: 5px solid #3a684b;
-    color: #fff;
+    border: 5px solid cadetblue;
+    color: #000;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 50px;
     font-family: Arial, Helvetica, sans-serif;
+}
+
+.items {
+        padding: 20px;
+    box-sizing: content-box;
+    background: url(https://polygraphist.kiev.ua/images/detailed/8484/A6T_6621_2.jpg);
+    background-position: -110px -220px;
+    background-size: 250%;
+}
+.blocked{
+    filter:brightness(0.5)
 }

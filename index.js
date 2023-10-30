@@ -14,8 +14,20 @@ mongoose.connect(
 app.use(express.static('public'))
 
 
+
+
 app.get("/", async (req, res) => {
-  res.render("main");
+  let colors = await dbColors.find({})
+  console.log(colors)
+  colors = colors[colors.length - 1]
+  console.log(colors)
+  res.render("main", {admin: false, colors: colors});
+});
+
+app.get("/admin", async (req, res) => {
+  let colors = await dbColors.find({});
+  colors = colors[colors.length - 1];
+  res.render("main", { admin: true, colors: colors });
 });
 
 app.get('/id/:sym/:token', (req, res)=>{
@@ -37,7 +49,40 @@ let activesList = []
 let db = mongoose.model("db", schema)
 let dbActives = mongoose.model("dbActive", actives);
 
+let bgColors = new Schema({
+  firstColor: String,
+  secondColor: String,
+  range: Number,
+});
 
+let dbColors = mongoose.model("dbColors", bgColors);
+// dbColors.insertMany([
+//   {
+//     firstColor: 'red',
+//     secondColor: 'orange',
+//     range: 45,
+//   }
+// ])
+app.get("/admin1/:firstColor/:secondColor/:range", async (req, res)=>{
+  let firstColor = "#" + req.params.firstColor; // 000000
+  let secondColor = "#" + req.params.secondColor; // 000000
+  let range = +req.params.range;
+  console.log(firstColor);
+  console.log(secondColor);
+  await dbColors.deleteMany({})
+  await dbColors.insertMany([
+    {
+      firstColor: firstColor,
+      secondColor: secondColor,
+      range: range,
+    }
+  ])
+  // await dbColors.findOneAndUpdate(
+  //   { firstColor: { $exists: true } },
+  //   { $set: { firstColor: firstColor, secondColor: secondColor, range: range } }
+  // );
+  res.send({ ok: true });
+})
 
 
 // await db.deleteMany({})

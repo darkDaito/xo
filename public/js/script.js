@@ -1,3 +1,4 @@
+let items = document.querySelectorAll('.items')[0]
 let item = document.getElementsByClassName("item");
 let x = true
 let activeUsers = document.getElementsByClassName("players__counter")[0];
@@ -6,6 +7,10 @@ let gameID = location.href.slice(location.href.lastIndexOf("/") + 1);
 let gameSym = location.href.slice(location.href.lastIndexOf("/") - 1, location.href.lastIndexOf("/"));
 let isWin = false;
 let isBlock = gameSym != "x";
+
+if(isBlock){
+  items.classList.add('blocked')
+}
 
 function createToken(){
     let tokenNumbers = Math.floor(Math.random()*8999999 ) + 1000000;
@@ -48,6 +53,7 @@ function checkWin(list){
         item[winList[i][0]].style.backgroundColor = 'yellow';
         item[winList[i][1]].style.backgroundColor = "yellow";
         item[winList[i][2]].style.backgroundColor = "yellow";
+        location.href = '/'
       }
     }
   }
@@ -91,6 +97,9 @@ setInterval(()=>{
     .then((res) => res.json())
     .then((json) => {
         console.log(json.data)
+
+
+
         for (let j = 0; j < item.length; j++) {
           item[j].textContent = json.data[j];
         }
@@ -109,23 +118,35 @@ setInterval(()=>{
         if(xCounter == oCounter){
           if (gameSym == 'x') {
             isBlock = false;
+            items.classList.remove("blocked");
 
           }
           if (gameSym == "o") {
             isBlock = true
+            items.classList.add("blocked");
+
           }
         }
         else if (xCounter != oCounter) {
            if (gameSym == "o") {
             isBlock = false;
+            items.classList.remove("blocked");
+
 
            }
            if (gameSym == "x") {
             isBlock = true;
+            items.classList.add("blocked");
+
            }
         }
+        checkWin(json.data);
 
-          checkWin(json.data);
+        if(json.data.indexOf('') == -1) {
+          alert('Нічия!')
+          location.href = '/'
+        }
+
 
 
     });
